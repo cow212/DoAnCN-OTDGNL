@@ -1,0 +1,70 @@
+# --- .NET / C# ---
+bin/
+obj/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+packages/
+*.nupkg
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.manifest
+*.spec
+venv/
+env/
+.venv/
+.env
+
+# --- Java / Eclipse / IntelliJ ---
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+target/
+.gradle/
+build/
+.idea/
+*.iml
+*.hprof
+
+# --- Unity ---
+[Ll]ibrary/
+[Ll]ogs/
+[Uu]serSettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+[Aa]ssets/AssetStoreTools*
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Rr]elease/
+[Rr]eleases/
+/[Mm]emory[Cc]aptures/
+.vs/
+.idea/
+
+# --- IDE & Hệ điều hành (Luôn cần) ---
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*

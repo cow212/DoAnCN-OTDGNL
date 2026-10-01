@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập / Đăng Ký - Ôn Thi ĐGNL</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Thanh chuyển tab -->
+        <div class="tab-header">
+            <button class="tab-btn active" id="tabLoginBtn" type="button">Đăng Nhập</button>
+            <button class="tab-btn" id="tabRegisterBtn" type="button">Đăng Ký</button>
+        </div>
+
+        <!-- 1. FORM ĐĂNG NHẬP -->
+        <div id="loginSection" class="form-section active">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Tên đăng nhập</label>
+                    <input type="text" id="loginUsername" required placeholder="Nhập username...">
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" id="loginPassword" required placeholder="Nhập mật khẩu...">
+                </div>
+                <button type="submit" class="btn-submit">Đăng Nhập</button>
+            </form>
+        </div>
+
+        <!-- 2. FORM ĐĂNG KÝ -->
+        <div id="registerSection" class="form-section">
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>Họ và tên</label>
+                    <input type="text" id="regFullName" required placeholder="Nhập họ và tên...">
+                </div>
+                <div class="form-group">
+                    <label>Tên đăng nhập</label>
+                    <input type="text" id="regUsername" required placeholder="Chọn username...">
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu (Có số & ký tự đặc biệt)</label>
+                    <input type="password" id="regPassword" required placeholder="Ví dụ: Abc@1234...">
+                </div>
+                <button type="submit" class="btn-submit">Đăng Ký Tài Khoản</button>
+            </form>
+        </div>
+
+        <!-- Thông báo -->
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        // Cấu hình API trực tiếp tránh lỗi module path
+        const API_BASE_URL = "http://localhost:5283/api";
+
+        async function apiRequest(endpoint, method = "GET", data = null) {
+            const options = {
+                method: method,
+                headers: { "Content-Type": "application/json" }
+            };
+            if (data) options.body = JSON.stringify(data);
+
+            const response = await fetch(`${API_BASE_URL}/${endpoint}`, options);
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText || "Đã có lỗi xảy ra từ máy chủ.");
+            }
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                return await response.json();
+            }
+            return await response.text();
+        }
+
+        // Xử lý chuyển tab
+        const loginSec = document.getElementById('loginSection');
+        const regSec = document.getElementById('registerSection');
+        const tabLoginBtn = document.getElementById('tabLoginBtn');
+        const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+        const msg = document.getElementById('message');
+
+        tabLoginBtn.addEventListener('click', () => {
+            loginSec.classList.add('active');
+            regSec.classList.remove('active');
+            tabLoginBtn.classList.add('active');
+            tabRegisterBtn.classList.remove('active');
+            msg.textContent = '';
+        });
+
+        tabRegisterBtn.addEventListener('click', () => {
+            regSec.classList.add('active');
+            loginSec.classList.remove('active');
+            tabRegisterBtn.classList.add('active');
+            tabLoginBtn.classList.remove('active');
+            msg.textContent = '';
+        });
+
+        // Xử lý Đăng nhập
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            msg.textContent = "Đang đăng nhập...";
+            msg.className = "message";
+
+            try {
+                const res = await apiRequest('Auth/login', 'POST', { username, password });
+                msg.textContent = "Đăng nhập thành công! Đang chuyển hướng...";
+                msg.className = "message success";
+                
+                localStorage.setItem('user', JSON.stringify(res));
+                setTimeout(() => window.location.href = 'exam.html', 1000);
+            } catch (err) {
+                msg.textContent = err.message || "Sai tên đăng nhập hoặc mật khẩu!";
+                msg.className = "message error";
+            }
+        });
+
+        // Xử lý Đăng ký
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('regFullName').value;
+            const username = document.getElementById('regUsername').value;
+            const password = document.getElementById('regPassword').value;
+
+            msg.textContent = "Đang xử lý đăng ký...";
+            msg.className = "message";
+
+            try {
+                await apiRequest('Auth/register', 'POST', { fullName, username, password });
+                msg.textContent = "Đăng ký thành công! Hãy chuyển sang tab Đăng Nhập.";
+                msg.className = "message success";
+                setTimeout(() => tabLoginBtn.click(), 1500);
+            } catch (err) {
+                msg.textContent = err.message || "Đăng ký thất bại. Kiểm tra lại mật khẩu!";
+                msg.className = "message error";
+            }
+        });
+    </script>
+</body>
+</html>

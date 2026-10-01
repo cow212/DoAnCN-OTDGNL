@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phòng Thi ĐGNL - Trực Tuyến</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .exam-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .logout-btn:hover {
+            opacity: 0.8;
+        }
+        .question-card {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        /* Sửa lỗi nút radio bị dính style width: 100% từ file css chung */
+        .question-card input[type="radio"] {
+            width: auto !important;
+            display: inline-block !important;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        .question-card label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body style="background: #f4f7f6; display: block;">
+
+    <div class="exam-container">
+        <div class="header-info">
+            <div>
+                <h2>Hệ Thống Thi Đánh Giá Năng Lực</h2>
+                <p>Xin chào, <span id="userNameDisplay" style="font-weight: bold; color: #667eea;">Học viên</span>!</p>
+            </div>
+            <button class="logout-btn" id="logoutBtn">Đăng Xuất</button>
+        </div>
+
+        <!-- Khu vực hiển thị danh sách câu hỏi -->
+        <div id="questionListContainer" style="margin-top: 20px;">
+            <p>Đang tải danh sách câu hỏi từ cơ sở dữ liệu...</p>
+        </div>
+
+        <button id="submitExamBtn" style="margin-top: 20px; background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; display: none;">Nộp Bài Thi</button>
+        <div id="resultDisplay" style="margin-top: 15px; font-weight: bold; font-size: 16px;"></div>
+    </div>
+
+    <script>
+        const API_BASE_URL = "http://localhost:5283/api";
+
+        // Hiển thị tên user từ localStorage
+        const userStr = localStorage.getItem('user');
+        if (userStr) {
+            try {
+                const userData = JSON.parse(userStr);
+                document.getElementById('userNameDisplay').textContent = userData.fullName || userData.username || "Thành viên";
+            } catch (e) { }
+        }
+
+        // Xử lý nút Đăng xuất
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        });
+
+        // Gọi API lấy danh sách câu hỏi
+        async function loadQuestions() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/Questions`);
+                if (!response.ok) throw new Error("Không thể tải câu hỏi từ máy chủ.");
+                
+                const questions = await response.json();
+                const container = document.getElementById('questionListContainer');
+                container.innerHTML = "";
+
+                if (questions.length === 0) {
+                    container.innerHTML = "<p>Chưa có câu hỏi nào trong hệ thống.</p>";
+                    return;
+                }
+
+                // Render câu hỏi ra màn hình (hỗ trợ cả camelCase và PascalCase từ C#)
+                questions.forEach((q, index) => {
+                    const qId = q.id || q.Id;
+                    const qText = q.questionText || q.QuestionText;
+                    const optA = q.optionA || q.OptionA;
+                    const optB = q.optionB || q.OptionB;
+                    const optC = q.optionC || q.OptionC;
+                    const optD = q.optionD || q.OptionD;
+
+                    const qDiv = document.createElement('div');
+                    qDiv.className = "question-card";
+
+                    qDiv.innerHTML = `
+                        <p style="font-weight: bold; margin-bottom: 12px;">Câu ${index + 1}: ${qText}</p>
+                        <label><input type="radio" name="question_${qId}" value="A"> A. ${optA}</label>
+                        <label><input type="radio" name="question_${qId}" value="B"> B. ${optB}</label>
+                        <label><input type="radio" name="question_${qId}" value="C"> C. ${optC}</label>
+                        <label><input type="radio" name="question_${qId}" value="D"> D. ${optD}</label>
+                    `;
+                    container.appendChild(qDiv);
+                });
+
+                window.allQuestions = questions;
+                document.getElementById('submitExamBtn').style.display = "block";
+
+            } catch (error) {
+                document.getElementById('questionListContainer').innerHTML = `<p style="color: red;">Lỗi: ${error.message}</p>`;
+            }
+        }
+
+        // Chấm điểm khi bấm Nộp Bài
+        document.getElementById('submitExamBtn').addEventListener('click', () => {
+            let score = 0;
+            const questions = window.allQuestions;
+
+            questions.forEach((q) => {
+                const qId = q.id || q.Id;
+                const correctAns = q.correctAnswer || q.CorrectAnswer;
+                const selectedOption = document.querySelector(`input[name="question_${qId}"]:checked`);
+                
+                if (selectedOption && selectedOption.value === correctAns) {
+                    score += 1;
+                }
+            });
+
+            const resultDiv = document.getElementById('resultDisplay');
+            resultDiv.style.color = "#27ae60";
+            resultDiv.textContent = `Kết quả của bạn: ${score} / ${questions.length} câu đúng!`;
+        });
+
+        loadQuestions();
+    </script>
+</body>
+</html>
