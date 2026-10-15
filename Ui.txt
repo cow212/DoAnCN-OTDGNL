@@ -1,0 +1,10 @@
+Hãy thiết kế cho tôi một trang web ôn thi (chuẩn responsive với Tailwind CSS) có giao diện y hệt nền tảng luyện thi DOL THPT với các thành phần sau:
+
+Thanh Header màu trắng cố định ở trên cùng: Logo 'DOL THPT' chữ đỏ đậm kèm icon tam giác, menu 'Kho đề thi', 'Quản lý luyện tập' (active màu đỏ nhạt) và nút 'Đăng nhập' màu đỏ góc phải.
+
+Phần Hero Section căn giữa: Thẻ tag nhỏ 'PRACTICE MAKES PERFECT' viền đỏ nhạt, tiêu đề lớn 'Học đúng hướng, Tăng điểm tự tin' (có điểm nhấn gạch chân màu đỏ nhạt), đoạn mô tả tính năng quản lý lộ trình, và hai nút CTA ('Đăng ký tài khoản miễn phí' và 'Đăng nhập').
+
+Khối 'Tính năng cốt lõi': Hiển thị 4 thẻ card bo tròn bao gồm: Lập mục tiêu điểm số (hiển thị band 6 và mục tiêu 10), Rèn luyện kỷ luật (heatmap chuỗi luyện tập), Đo lường tiến độ, và Phân tích điểm yếu/mạnh.
+
+Phần 'Chẩn bệnh kiến thức': Chia 2 cột gồm phần văn bản mô tả giải pháp tăng điểm tối ưu, và các thẻ card chi tiết tiến độ thanh phần trăm màu xanh (điểm mạnh) và màu cam (cần bổ sung).
+Yêu cầu giao diện hiện đại, sử dụng font chữ sans-serif gọn gàng, bo góc mềm mại, đổ bóng nhẹ nhàng giống hệt giao diện web EdTech chuyên nghiệp."

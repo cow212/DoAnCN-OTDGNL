@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Thi ĐGNL - Ôn thi ĐGNL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+                    colors: {
+                        brand: { 50: '#fef2f2', 100: '#fee2e2', 500: '#ef4444', 600: '#dc2626', 700: '#b91c1c' },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .underline-accent {
+            background-image: linear-gradient(120deg, #fecaca 0%, #fecaca 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 0.45em;
+            background-position: 0 88%;
+            padding-bottom: 0.05em;
+        }
+        .heatmap-cell { transition: transform .15s ease; }
+        .heatmap-cell:hover { transform: scale(1.15); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Header cố định -->
+    <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <a href="#" class="flex items-center gap-2 font-black text-xl text-brand-700">
+                    <span class="inline-flex w-8 h-8 items-center justify-center rounded-lg bg-brand-600 text-white">
+                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor"><path d="M12 2l9 6-9 6-9-6 9-6zm0 8.5l9 5.5-9 6-9-5.5 9-5.5z"/></svg>
+                    </span>
+                    Ôn Thi ĐGNL
+                </a>
+                <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+                    <a href="kho-de-thi.html" data-require-auth class="px-3 py-2 rounded-lg text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Kho đề thi</a>
+                    <a id="adminLink" href="admin.html" class="hidden px-3 py-2 rounded-lg text-amber-700 bg-amber-50 font-semibold transition">Quản lý</a>
+                </nav>
+            </div>
+
+            <a href="login.html" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 shadow-sm transition">
+                Đăng nhập
+            </a>
+        </div>
+    </header>
+
+    <main class="pt-20">
+
+        <!-- Hero -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 text-center py-16 sm:py-24">
+        
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6">
+                Học <span class="underline-accent">đúng hướng</span>,<br>
+                Tăng điểm <span class="text-brand-600">tự tin</span>
+            </h1>
+            <p class="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto mb-8">
+                Quản lý lộ trình học tập cá nhân hóa, theo dõi tiến độ từng kỹ năng và nhận phân tích điểm mạnh, điểm yếu để cải thiện kết quả thi nhanh chóng.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a href="register.html" class="w-full sm:w-auto px-7 py-3 rounded-xl text-white font-bold bg-brand-600 hover:bg-brand-700 shadow-md transition">
+                    Đăng ký tài khoản miễn phí
+                </a>
+                <a href="login.html" class="w-full sm:w-auto px-7 py-3 rounded-xl font-bold text-brand-600 border border-brand-200 bg-white hover:bg-brand-50 transition">
+                    Đăng nhập
+                </a>
+            </div>
+        </section>
+
+        <!-- Tính năng cốt lõi -->
+        <section id="quan-ly-luyen-tap" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl sm:text-3xl font-black">Tính năng cốt lõi</h2>
+                <p class="text-slate-500 mt-2">Những công cụ giúp bạn luyện tập hiệu quả và đo lường tiến độ.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Lập mục tiêu -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-2xl mb-4">🎯</div>
+                    <h3 class="font-bold text-lg mb-2">Lập mục tiêu điểm số</h3>
+                    <p class="text-sm text-slate-500 mb-4">Thiết lập band hiện tại và mục tiêu để có lộ trình phù hợp.</p>
+                    <div class="flex items-center gap-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600">Band 6</span>
+                        <span class="text-slate-400">→</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-brand-50 text-brand-600">Mục tiêu 10</span>
+                    </div>
+                </div>
+
+                <!-- Rèn luyện kỷ luật -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl mb-4">🔥</div>
+                    <h3 class="font-bold text-lg mb-2">Rèn luyện kỷ luật</h3>
+                    <p class="text-sm text-slate-500 mb-4">Theo dõi chuỗi luyện tập mỗi ngày với heatmap.</p>
+                    <div class="grid grid-cols-7 gap-1">
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-emerald-200"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-emerald-300"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-emerald-500"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-emerald-400"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-slate-200"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-emerald-300"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-emerald-600"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-slate-200"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-emerald-400"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-emerald-200"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-slate-200"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-emerald-500"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-emerald-300"></div>
+                        <div class="heatmap-cell w-4 h-4 rounded-sm bg-emerald-200"></div>
+                    </div>
+                </div>
+
+                <!-- Đo lường tiến độ -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-4">📈</div>
+                    <h3 class="font-bold text-lg mb-2">Đo lường tiến độ</h3>
+                    <p class="text-sm text-slate-500 mb-4">Cập nhật điểm số theo từng bài kiểm tra.</p>
+                    <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                        <div class="h-full bg-blue-500 rounded-full" style="width: 72%"></div>
+                    </div>
+                    <div class="text-right text-xs font-bold text-blue-600 mt-1">72%</div>
+                </div>
+
+                <!-- Phân tích điểm yếu/mạnh -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl mb-4">🧠</div>
+                    <h3 class="font-bold text-lg mb-2">Phân tích điểm yếu/mạnh</h3>
+                    <p class="text-sm text-slate-500 mb-4">Biết chính xác cần cải thiện phần nào.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-600">Toán logic</span>
+                        <span class="px-2 py-1 rounded-md text-xs font-semibold bg-red-50 text-red-600">Từ vựng</span>
+                        <span class="px-2 py-1 rounded-md text-xs font-semibold bg-amber-50 text-amber-600">Đọc hiểu</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chẩn bệnh kiến thức -->
+        <section id="kho-de-thi" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid lg:grid-cols-2 gap-10 items-center">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-black mb-4">Chẩn bị kiến thức</h2>
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        Hệ thống phân tích kết quả thi thử để xác định chính xác điểm mạnh và điểm yếu của bạn. Từ đó đề xuất lộ trình luyện tập tối ưu, giúp tăng điểm nhanh nhất mà không lãng phí thời gian.
+                    </p>
+                    <ul class="space-y-2 text-slate-600">
+                        <li class="flex items-center gap-2"><span class="text-emerald-500">✔</span> Lộ trình cá nhân hóa theo năng lực</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-500">✔</span> Bài tập bổ sung đúng chỗ thiếu</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-500">✔</span> Theo dõi sự tiến bộ theo thời gian</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-semibold text-slate-700">Toán logic</span>
+                            <span class="font-bold text-emerald-600">85%</span>
+                        </div>
+                        <div class="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
+                            <div class="h-full bg-emerald-500 rounded-full" style="width: 85%"></div>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">Điểm mạnh                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-semibold text-slate-700">Từ vựng</span>
+                            <span class="font-bold text-orange-600">45%</span>
+                        </div>
+                        <div class="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
+                            <div class="h-full bg-orange-500 rounded-full" style="width: 45%"></div>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">Cần bổ sung</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-slate-400 text-sm py-8">
+            © 2026 Hệ thống ôn thi ĐGNL. All rights reserved.
+        </footer>
+    </main>
+<script>
+document.querySelectorAll('[data-require-auth]').forEach(function(el){
+  el.addEventListener('click', function(e){
+    if(!localStorage.getItem('user')){
+      e.preventDefault();
+      window.location.href = 'login.html';
+    }
+  });
+});
+</script>
+<script>
+const _u = JSON.parse(localStorage.getItem('user') || 'null');
+if (_u && String(_u.Role || '').toLowerCase() === 'admin') {
+    const _a = document.getElementById('adminLink');
+    if (_a) _a.classList.remove('hidden');
+}
+</script>
+</body>
+</html>

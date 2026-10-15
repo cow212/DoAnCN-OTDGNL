@@ -1,5 +1,6 @@
-// Cấu hình kết nối API chung tới Backend .NET 8
-const API_BASE_URL = "https://localhost:7162/api";
+// Cấu hình kết nối API chung tới Backend Python (port từ API .NET)
+// (Bản .NET gốc: https://localhost:7162/api)
+const API_BASE_URL = "http://localhost:8000/api";
 
 async function apiRequest(endpoint, method = "GET", data = null) {
     const options = {

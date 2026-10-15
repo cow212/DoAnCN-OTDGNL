@@ -3,59 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập / Đăng Ký - Ôn Thi ĐGNL</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Đăng Nhập - Ôn Thi ĐGNL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+                    colors: { brand: { 50: '#fef2f2', 100: '#fee2e2', 500: '#ef4444', 600: '#dc2626', 700: '#b91c1c' } }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
 
-    <div class="container">
-        <!-- Thanh chuyển tab -->
-        <div class="tab-header">
-            <button class="tab-btn active" id="tabLoginBtn" type="button">Đăng Nhập</button>
-            <button class="tab-btn" id="tabRegisterBtn" type="button">Đăng Ký</button>
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2 font-black text-xl text-brand-700">
+                    <span class="inline-flex w-8 h-8 items-center justify-center rounded-lg bg-brand-600 text-white">
+                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor"><path d="M12 2l9 6-9 6-9-6 9-6zm0 8.5l9 5.5-9 6-9-5.5 9-5.5z"/></svg>
+                    </span>
+                    Ôn Thi ĐGNL
+                </a>
+                <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+                    <a href="index.html#kho-de-thi" class="px-3 py-2 rounded-lg text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Kho đề thi</a>
+                </nav>
+            </div>
+            <a href="register.html" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 shadow-sm transition">Đăng ký</a>
         </div>
+    </header>
 
-        <!-- 1. FORM ĐĂNG NHẬP -->
-        <div id="loginSection" class="form-section active">
-            <form id="loginForm">
-                <div class="form-group">
-                    <label>Tên đăng nhập</label>
-                    <input type="text" id="loginUsername" required placeholder="Nhập username...">
+    <main class="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-lg border border-slate-100 p-8">
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-brand-600 text-white flex items-center justify-center text-2xl">🎓</div>
+                <h1 class="text-2xl font-black">Đăng nhập</h1>
+                <p class="text-slate-500 text-sm mt-1">Chào mừng bạn quay trở lại hệ thống ôn thi ĐGNL.</p>
+            </div>
+
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Tên đăng nhập</label>
+                    <input id="loginUsername" type="text" required placeholder="Nhập username..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition outline-none">
                 </div>
-                <div class="form-group">
-                    <label>Mật khẩu</label>
-                    <input type="password" id="loginPassword" required placeholder="Nhập mật khẩu...">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Mật khẩu</label>
+                    <input id="loginPassword" type="password" required placeholder="Nhập mật khẩu..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition outline-none">
                 </div>
-                <button type="submit" class="btn-submit">Đăng Nhập</button>
+                <button type="submit" class="w-full py-3 rounded-xl text-white font-bold bg-brand-600 hover:bg-brand-700 shadow-md transition">Đăng Nhập</button>
             </form>
-        </div>
 
-        <!-- 2. FORM ĐĂNG KÝ -->
-        <div id="registerSection" class="form-section">
-            <form id="registerForm">
-                <div class="form-group">
-                    <label>Họ và tên</label>
-                    <input type="text" id="regFullName" required placeholder="Nhập họ và tên...">
-                </div>
-                <div class="form-group">
-                    <label>Tên đăng nhập</label>
-                    <input type="text" id="regUsername" required placeholder="Chọn username...">
-                </div>
-                <div class="form-group">
-                    <label>Mật khẩu (Có số & ký tự đặc biệt)</label>
-                    <input type="password" id="regPassword" required placeholder="Ví dụ: Abc@1234...">
-                </div>
-                <button type="submit" class="btn-submit">Đăng Ký Tài Khoản</button>
-            </form>
-        </div>
+            <p id="message" class="mt-4 text-center text-sm font-medium min-h-[20px]"></p>
 
-        <!-- Thông báo -->
-        <div id="message" class="message"></div>
+            <div class="mt-6 flex items-center justify-between text-sm">
+                <button id="forgotBtn" type="button" class="text-slate-500 hover:text-brand-600 transition">Quên mật khẩu?</button>
+                <button id="openChangePwd" type="button" class="text-brand-600 font-bold hover:underline transition">Đổi mật khẩu</button>
+            </div>
+
+            <div class="mt-4 text-center text-sm text-slate-500">
+                Chưa có tài khoản?
+                <a href="register.html" class="text-brand-600 font-bold hover:underline">Đăng ký ngay</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal đổi mật khẩu -->
+    <div id="changePwdModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-100 p-6">
+            <h3 class="text-xl font-black mb-1">Đổi mật khẩu</h3>
+            <p class="text-sm text-slate-500 mb-4">Nhập thông tin tài khoản và mật khẩu mới (có số & ký tự đặc biệt).</p>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Tên đăng nhập</label>
+                    <input id="cpUsername" type="text" placeholder="Username của bạn" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Mật khẩu cũ</label>
+                    <input id="cpOldPassword" type="password" placeholder="Mật khẩu hiện tại" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Mật khẩu mới</label>
+                    <input id="cpNewPassword" type="password" placeholder="Mật khẩu mới" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition outline-none">
+                </div>
+            </div>
+            <p id="cpMessage" class="mt-3 text-center text-sm font-medium min-h-[20px]"></p>
+            <div class="mt-4 flex gap-3">
+                <button id="closeChangePwd" type="button" class="flex-1 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 font-bold hover:bg-slate-100 transition">Hủy</button>
+                <button id="submitChangePwd" type="button" class="flex-[2] py-3 rounded-xl text-white font-bold bg-brand-600 hover:bg-brand-700 shadow-md transition">Xác Nhận Đổi</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Cấu hình API trực tiếp tránh lỗi module path
-        const API_BASE_URL = "http://localhost:5283/api";
+        const API_BASE_URL = "http://localhost:8000/api";
 
         async function apiRequest(endpoint, method = "GET", data = null) {
             const options = {
@@ -70,76 +115,82 @@
                 throw new Error(errorText || "Đã có lỗi xảy ra từ máy chủ.");
             }
             const contentType = response.headers.get("content-type");
-            if (contentType && contentType.includes("application/json")) {
-                return await response.json();
-            }
+            if (contentType && contentType.includes("application/json")) return await response.json();
             return await response.text();
         }
 
-        // Xử lý chuyển tab
-        const loginSec = document.getElementById('loginSection');
-        const regSec = document.getElementById('registerSection');
-        const tabLoginBtn = document.getElementById('tabLoginBtn');
-        const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+        function setMessage(el, text, type) {
+            if (!el) return;
+            el.textContent = text;
+            el.className = "mt-4 text-center text-sm font-medium min-h-[20px] " +
+                (type === "error" ? "text-red-600" : type === "success" ? "text-emerald-600" : "text-brand-600");
+        }
+
         const msg = document.getElementById('message');
 
-        tabLoginBtn.addEventListener('click', () => {
-            loginSec.classList.add('active');
-            regSec.classList.remove('active');
-            tabLoginBtn.classList.add('active');
-            tabRegisterBtn.classList.remove('active');
-            msg.textContent = '';
-        });
-
-        tabRegisterBtn.addEventListener('click', () => {
-            regSec.classList.add('active');
-            loginSec.classList.remove('active');
-            tabRegisterBtn.classList.add('active');
-            tabLoginBtn.classList.remove('active');
-            msg.textContent = '';
-        });
-
-        // Xử lý Đăng nhập
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const username = document.getElementById('loginUsername').value;
             const password = document.getElementById('loginPassword').value;
 
-            msg.textContent = "Đang đăng nhập...";
-            msg.className = "message";
+            setMessage(msg, "Đang đăng nhập...", "info");
 
             try {
                 const res = await apiRequest('Auth/login', 'POST', { username, password });
-                msg.textContent = "Đăng nhập thành công! Đang chuyển hướng...";
-                msg.className = "message success";
-                
+                setMessage(msg, "Đăng nhập thành công! Đang chuyển hướng...", "success");
                 localStorage.setItem('user', JSON.stringify(res));
-                setTimeout(() => window.location.href = 'exam.html', 1000);
+                setTimeout(() => {
+                    if (String(res.Role || '').toLowerCase() === 'admin') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                }, 1000);
             } catch (err) {
-                msg.textContent = err.message || "Sai tên đăng nhập hoặc mật khẩu!";
-                msg.className = "message error";
+                setMessage(msg, err.message || "Sai tên đăng nhập hoặc mật khẩu!", "error");
             }
         });
 
-        // Xử lý Đăng ký
-        document.getElementById('registerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const fullName = document.getElementById('regFullName').value;
-            const username = document.getElementById('regUsername').value;
-            const password = document.getElementById('regPassword').value;
+        // modal change password
+        const changeModal = document.getElementById('changePwdModal');
+        const openModal = () => {
+            changeModal.classList.remove('hidden');
+            changeModal.classList.add('flex');
+        };
+        const closeModal = () => {
+            changeModal.classList.add('hidden');
+            changeModal.classList.remove('flex');
+        };
 
-            msg.textContent = "Đang xử lý đăng ký...";
-            msg.className = "message";
+        document.getElementById('openChangePwd').addEventListener('click', openModal);
+        document.getElementById('closeChangePwd').addEventListener('click', closeModal);
+        changeModal.addEventListener('click', (e) => {
+            if (e.target === changeModal) closeModal();
+        });
 
-            try {
-                await apiRequest('Auth/register', 'POST', { fullName, username, password });
-                msg.textContent = "Đăng ký thành công! Hãy chuyển sang tab Đăng Nhập.";
-                msg.className = "message success";
-                setTimeout(() => tabLoginBtn.click(), 1500);
-            } catch (err) {
-                msg.textContent = err.message || "Đăng ký thất bại. Kiểm tra lại mật khẩu!";
-                msg.className = "message error";
+        document.getElementById('submitChangePwd').addEventListener('click', async () => {
+            const cpMsg = document.getElementById('cpMessage');
+            const username = document.getElementById('cpUsername').value.trim();
+            const oldPassword = document.getElementById('cpOldPassword').value;
+            const newPassword = document.getElementById('cpNewPassword').value;
+
+            if (!username || !oldPassword || !newPassword) {
+                setMessage(cpMsg, "Vui lòng nhập đầy đủ thông tin.", "error");
+                return;
             }
+
+            setMessage(cpMsg, "Đang xử lý...", "info");
+            try {
+                const res = await apiRequest('Auth/change-password', 'POST', { username, oldPassword, newPassword });
+                setMessage(cpMsg, (typeof res === "string" ? res : (res.Message || "Đổi mật khẩu thành công!")), "success");
+                setTimeout(closeModal, 1500);
+            } catch (err) {
+                setMessage(cpMsg, err.message || "Đổi mật khẩu thất bại!", "error");
+            }
+        });
+
+        document.getElementById('forgotBtn').addEventListener('click', () => {
+            alert('Vui lòng dùng chức năng "Đổi mật khẩu" nếu biết mật khẩu cũ.');
         });
     </script>
 </body>

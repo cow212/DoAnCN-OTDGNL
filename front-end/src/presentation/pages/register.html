@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký - Ôn Thi ĐGNL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+                    colors: { brand: { 50: '#fef2f2', 100: '#fee2e2', 500: '#ef4444', 600: '#dc2626', 700: '#b91c1c' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .underline-accent { background-image: linear-gradient(120deg,#fecaca 0%,#fecaca 100%); background-repeat: no-repeat; background-size:100% .45em; background-position: 0 88%; padding-bottom:.05em; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2 font-black text-xl text-brand-700">
+                    <span class="inline-flex w-8 h-8 items-center justify-center rounded-lg bg-brand-600 text-white">
+                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor"><path d="M12 2l9 6-9 6-9-6 9-6zm0 8.5l9 5.5-9 6-9-5.5 9-5.5z"/></svg>
+                    </span>
+                    Ôn Thi ĐGNL
+                </a>
+                <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+                    <a href="index.html#kho-de-thi" class="px-3 py-2 rounded-lg text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Kho đề thi</a>
+                </nav>
+            </div>
+            <a href="login.html" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 shadow-sm transition">Đăng nhập</a>
+        </div>
+    </header>
+
+    <main class="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-lg border border-slate-100 p-8">
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-brand-600 text-white flex items-center justify-center text-2xl">🎓</div>
+                <h1 class="text-2xl font-black">Tạo tài khoản mới</h1>
+                <p class="text-slate-500 text-sm mt-1">Đăng ký để bắt đầu ôn thi ĐGNL.</p>
+            </div>
+
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Họ và tên</label>
+                    <input id="regFullName" type="text" required placeholder="Nhập họ và tên..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Tên đăng nhập</label>
+                    <input id="regUsername" type="text" required placeholder="Chọn username..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Mật khẩu (có số & ký tự đặc biệt)</label>
+                    <input id="regPassword" type="password" required placeholder="Ví dụ: Abc@1234..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition outline-none">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl text-white font-bold bg-brand-600 hover:bg-brand-700 shadow-md transition">Đăng Ký Tài Khoản</button>
+            </form>
+
+            <p id="message" class="mt-4 text-center text-sm font-medium min-h-[20px]"></p>
+
+            <div class="mt-6 text-center text-sm text-slate-500">
+                Đã có tài khoản?
+                <a href="login.html" class="text-brand-600 font-bold hover:underline">Đăng nhập</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API_BASE_URL = "http://localhost:8000/api";
+
+        async function apiRequest(endpoint, method = "GET", data = null) {
+            const options = {
+                method,
+                headers: { "Content-Type": "application/json" }
+            };
+            if (data) options.body = JSON.stringify(data);
+            const response = await fetch(`${API_BASE_URL}/${endpoint}`, options);
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText || "Đã có lỗi xảy ra từ máy chủ.");
+            }
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) return await response.json();
+            return await response.text();
+        }
+
+        const msg = document.getElementById('message');
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('regFullName').value;
+            const username = document.getElementById('regUsername').value;
+            const password = document.getElementById('regPassword').value;
+
+            msg.textContent = "Đang xử lý đăng ký...";
+            msg.className = "text-center text-sm font-medium mt-4 text-brand-600";
+
+            try {
+                await apiRequest('Auth/register', 'POST', { fullName, username, password });
+                msg.textContent = "Đăng ký thành công! Đang chuyển sang Đăng nhập...";
+                msg.className = "text-center text-sm font-medium mt-4 text-emerald-600";
+                setTimeout(() => window.location.href = 'login.html', 1500);
+            } catch (err) {
+                msg.textContent = err.message || "Đăng ký thất bại. Kiểm tra lại mật khẩu!";
+                msg.className = "text-center text-sm font-medium mt-4 text-red-600";
+            }
+        });
+    </script>
+</body>
+</html>

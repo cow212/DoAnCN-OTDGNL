@@ -1,6 +1,0 @@
-<Solution>
-  <Project Path="OnThiDGNL.API/OnThiDGNL.API.csproj" />
-  <Project Path="OnThiDGNL.Application/OnThiDGNL.Application.csproj" />
-  <Project Path="OnThiDGNL.Domain/OnThiDGNL.Domain.csproj" />
-  <Project Path="OnThiDGNL.Infrastructure/OnThiDGNL.Infrastructure.csproj" />
-</Solution>
